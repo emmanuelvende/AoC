@@ -8,16 +8,8 @@ def compute_priority(letter):
 with open("input.txt", "r") as f:
     lines = f.readlines()
 
-lists_of_3_lines = []
-index = 0
-list_of_3_lines = []
-for line in lines:
-    list_of_3_lines.append(line)
-    index += 1
-    if index == 3:
-        lists_of_3_lines.append(list_of_3_lines)
-        list_of_3_lines = []
-        index = 0
+N = 3
+lists_of_3_lines = [lines[n : n + N] for n in range(0, len(lines), N)]
 
 
 def find_badge(line_a, line_b, line_c):
