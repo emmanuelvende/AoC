@@ -2,6 +2,8 @@ def does_contain(a, b):
     """
     a : (i, j)
     b : (k, l)
+
+    Return: does a contains b ?
     """
 
     def _contains(i, j, k, l):
@@ -16,6 +18,8 @@ def does_overlap(a, b):
     """
     a : (i, j)
     b : (k, l)
+
+    Return: does b overlap on a at starting or ending of the zone ?
     """
 
     def _overlaps(i, j, k, l):
@@ -42,7 +46,7 @@ for line in lines:
     zone_a, zone_b = [convert(x) for x in line[:-1].split(",")]
     contains = does_contain(zone_a, zone_b) or does_contain(zone_b, zone_a)
     overlaps = does_overlap(zone_a, zone_b) or does_overlap(zone_b, zone_a)
-    print(f"{line=} --> {zone_a=} {zone_b=} --> {contains=} | {overlaps=}")
+    # print(f"{line=} --> {zone_a=} {zone_b=} --> {contains=} | {overlaps=}")
     if contains or overlaps:
         total += 1
 

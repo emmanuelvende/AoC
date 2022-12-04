@@ -2,6 +2,8 @@ def does_contain(a, b):
     """
     a : (i, j)
     b : (k, l)
+
+    Return: does a contains b ?
     """
 
     def _contains(i, j, k, l):
@@ -29,7 +31,7 @@ total = 0
 for line in lines:
     zone_a, zone_b = [convert(x) for x in line[:-1].split(",")]
     contains = does_contain(zone_a, zone_b) or does_contain(zone_b, zone_a)
-    print(f"{line=} --> {zone_a=} {zone_b=} --> {contains=}")
+    # print(f"{line=} --> {zone_a=} {zone_b=} --> {contains=}")
     if contains:
         total += 1
 
