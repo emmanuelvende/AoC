@@ -4,12 +4,12 @@ def does_contain(a, b):
     b : (k, l)
     """
 
-    def _overlaps(i, j, k, l):
+    def _contains(i, j, k, l):
         return k <= i and j <= l
 
     i, j = a
     k, l = b
-    does_contain = _overlaps(i, j, k, l)
+    does_contain = _contains(i, j, k, l)
     if does_contain:
         return does_contain
 
