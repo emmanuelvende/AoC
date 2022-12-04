@@ -1,7 +1,18 @@
 # AoC-2022
 My participation to Advent of Code 2022
 
-(Python code)
+
+>_"Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live"_
+
+― John Woods
+
+My motivation is to achieve puzzles certainly as fast as I can (and I'm not so quick as I would :), but also with the more maintainable and shareable code I can write.
+
+I keep this solves under my pillow to consult as useful examples code base when I fall on similar problems as coding in my every day job.
+
+Due to schedulings and other occupations I cannot assume true competition, I would be glad for any comments on my solutions since I know they're certainly not the best one could publish.
+
+Hope you'll get some learning reading mu solutions.
 
 ```
       --------Part 1--------   --------Part 2--------
