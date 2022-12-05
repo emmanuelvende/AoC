@@ -11,9 +11,7 @@ def does_contain(a, b):
 
     i, j = a
     k, l = b
-    does_contain = _contains(i, j, k, l)
-    if does_contain:
-        return does_contain
+    return _contains(i, j, k, l)
 
 
 def convert(zone_str):
