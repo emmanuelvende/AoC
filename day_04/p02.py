@@ -23,9 +23,7 @@ def does_overlap(a, b):
     def _overlaps(i, j, k, l):
         return (k <= i and i <= l and l <= k) or (i <= k and k <= j and j <= l)
 
-    i, j = a
-    k, l = b
-    return _overlaps(i, j, k, l)
+    return _overlaps(*a, *b)
 
 
 def convert(zone_str):
