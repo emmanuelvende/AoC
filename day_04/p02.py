@@ -9,9 +9,7 @@ def does_contain(a, b):
     def _contains(i, j, k, l):
         return k <= i and j <= l
 
-    i, j = a
-    k, l = b
-    return _contains(i, j, k, l)
+    return _contains(*a, *b)
 
 
 def does_overlap(a, b):
