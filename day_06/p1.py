@@ -3,7 +3,8 @@ import itertools
 with open("input.txt", "r") as f:
     text = f.read()
 
-def test_all_diff(u):
+
+def test_that_all_char_are_different(u):
     """
     u = (a, b, c, d)
     """
@@ -13,23 +14,20 @@ def test_all_diff(u):
     return success
 
 
-
-def test_on_text(text):
+def find_1st_serie_of_different_chars_in_text(text):
     for i, x in enumerate(text):
         if i >= 4:
             a = x
             b = text[i - 1]
             c = text[i - 2]
             d = text[i - 3]
-            if test_all_diff((a, b, c, d)):
+            if test_that_all_char_are_different((a, b, c, d)):
                 answer = i + 1
                 break
     return answer
 
-
-
-print(test_on_text("bvwbjplbgvbhsrlpgdmjqwftvncz"))
-print(test_on_text("nppdvjthqldpwncqszvftbrmjlhg"))
-print(test_on_text("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"))
-print(test_on_text("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"))
-print(test_on_text(text))
+# print(find_1st_serie_of_different_chars_in_text("bvwbjplbgvbhsrlpgdmjqwftvncz"))
+# print(find_1st_serie_of_different_chars_in_text("nppdvjthqldpwncqszvftbrmjlhg"))
+# print(find_1st_serie_of_different_chars_in_text("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"))
+# print(find_1st_serie_of_different_chars_in_text("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"))
+print(find_1st_serie_of_different_chars_in_text(text))
