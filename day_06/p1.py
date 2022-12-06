@@ -26,8 +26,14 @@ def find_1st_serie_of_different_chars_in_text(text):
                 break
     return answer
 
-# print(find_1st_serie_of_different_chars_in_text("bvwbjplbgvbhsrlpgdmjqwftvncz"))
-# print(find_1st_serie_of_different_chars_in_text("nppdvjthqldpwncqszvftbrmjlhg"))
-# print(find_1st_serie_of_different_chars_in_text("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"))
-# print(find_1st_serie_of_different_chars_in_text("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"))
+
+# for msg in (
+#     "bvwbjplbgvbhsrlpgdmjqwftvncz",
+#     "nppdvjthqldpwncqszvftbrmjlhg",
+#     "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg",
+#     "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
+# ):
+#     print(find_1st_serie_of_different_chars_in_text(msg))
+
+
 print(find_1st_serie_of_different_chars_in_text(text))
