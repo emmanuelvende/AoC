@@ -1,21 +1,6 @@
 import re
 import sys
 
-# class Dir:
-#     def __init__(self, name):
-#         # self.depth = depth
-#         self.name = name
-#         self.dirs = []
-#         self.files = []
-
-#     def __str__(self):
-#         return (
-#             f"Dir<{self.name}, {self.depth}>{{DIRS={self.dirs}, FILES={self.files}}}"
-#         )
-
-#     def __repr__(self):
-#         return self.__str__()
-
 
 class FileSystemManager:
     def __init__(self):
@@ -74,7 +59,6 @@ class FileSystemManager:
     def finalize(self):
         while len(self.filesystem_tmp) > 0:
             self.up()
-        # self.fs_final.reverse()
 
     def compute_directories_sizes(self):
         self.dirs_sizes_dict = {}
@@ -135,8 +119,24 @@ filesystem_manager.compute_directories_sizes()
 for x in filesystem_manager.dirs_sizes_dict.items():
     print(x)
 
-total_size_of_dirs_of_at_most_100000 = 0
-for x in filesystem_manager.dirs_sizes_dict.values():
-    if x <= 100000:
-        total_size_of_dirs_of_at_most_100000 += x
-print(f"{total_size_of_dirs_of_at_most_100000=}")
+occupied_space = filesystem_manager.dirs_sizes_dict["/"]
+print(f"{occupied_space=}")
+
+TOTAL_DISK_SPACE = 70000000
+MIN_FREE_SPACE = 30000000
+
+free_space = TOTAL_DISK_SPACE - occupied_space
+print(f"{free_space=}")
+
+candidates_for_deletion = []
+for x in filesystem_manager.dirs_sizes_dict.items():
+    size = x[1]
+    if free_space + size >= MIN_FREE_SPACE:
+        candidates_for_deletion.append(x)
+
+candidates_for_deletion.sort(key=lambda c: c[1])  # sort by size
+
+print(f"{candidates_for_deletion=}")
+best_candidate = candidates_for_deletion[0]
+size_of_best_candidate = best_candidate[1]
+print(f"{size_of_best_candidate=}")
