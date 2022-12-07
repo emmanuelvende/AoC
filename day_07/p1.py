@@ -1,22 +1,6 @@
 import re
 import sys
 
-# class Dir:
-#     def __init__(self, name):
-#         # self.depth = depth
-#         self.name = name
-#         self.dirs = []
-#         self.files = []
-
-#     def __str__(self):
-#         return (
-#             f"Dir<{self.name}, {self.depth}>{{DIRS={self.dirs}, FILES={self.files}}}"
-#         )
-
-#     def __repr__(self):
-#         return self.__str__()
-
-
 class FileSystemManager:
     def __init__(self):
         self.filesystem_tmp = []
