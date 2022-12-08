@@ -10,7 +10,7 @@ lines[-1] += "\n"
 rows = []
 for line in lines:
     input_line = line[:-1]
-    row = [x for x in input_line]
+    row = [int(x) for x in input_line]
     rows.append(row)
 a = len(rows)
 
@@ -27,7 +27,8 @@ def get_column_from_up(rows, col):
 
 
 def get_column_from_down(rows, col):
-    return list(reversed(get_column_from_up(rows, col)))
+    column = [row[col] for row in rows]
+    return list(reversed(column))
 
 
 def get_row_from_left(rows, row):
@@ -55,51 +56,51 @@ def get_row_from_right(rows, row):
 #     print(f"{i=} --> {get_row_from_right(rows, row=i)=}")
 
 
-def check_visibility(trees):
-    nb = 0
-    edge = trees[0]
-    rank = 0
+def compute_visible_trees(trees):
+    # nb = 0
+    # edge = trees[0]
+    # rank = 0
+    ranks = []
 
-    inside_trees = trees[1:-1]
-    for i, x in inside_trees[1:]:
-        pass
-
-    # inside_trees = trees[1:-1]
-    # for i, x in enumerate(inside_trees):
-    #     if is_visible(x, inside_trees[:i], edge):
-    #         nb += 1
-    #         rank = i
-    #         break
-    return nb, rank
+    for i, x in enumerate(trees[1:]):
+        if x > max(trees[: i + 1]):
+            # nb += 1
+            ranks.append(i + 1)
+            # break
+    return ranks
 
 
-def detect_from_up(rows, col):
-    column = get_column_from_up(rows, col)
-    return check_visibility(column)
 
 
-def detect_from_down(rows, i):
-    column = get_column_from_down(rows, i)
-    return check_visibility(column)
+# t = "65332"
+# nb, rank = check_visibility([int(x) for x in t])
+# print(nb, rank)
 
 
-def detect_from_left(rows, i):
-    row = get_row_from_left(rows, i)
-    return check_visibility(row)
+def detect_from_top(rows, col_index):
+    trees = get_column_from_up(rows, col_index)
+    # print(f"detect_from_up, {col_index=}, {trees=}")
+    return compute_visible_trees(trees)
 
 
-def detect_from_right(rows, i):
-    row = get_row_from_right(rows, i)
-    return check_visibility(row)
+def detect_from_down(rows, col_index):
+    trees = get_column_from_down(rows, col_index)
+    # print(f"detect_from_down, {col_index=}, {trees=}")
+    return compute_visible_trees(trees)
 
 
-# for i in range(1, a - 1):
-#     print(f"{i=} --> {detect_from_up(rows, i)=}")
-#     print(f"{i=} --> {detect_from_right(rows, i)=}")
-#     print(f"{i=} --> {detect_from_down(rows, i)=}")
-#     print(f"{i=} --> {detect_from_left(rows, i)=}")
+def detect_from_left(rows, row_index):
+    trees = get_row_from_left(rows, row_index)
+    # print(f"detect_from_left, {row_index=}, {trees=}")
+    return compute_visible_trees(trees)
 
-# nb_edges = 4 * a - 3
+
+def detect_from_right(rows, row_index):
+    trees = get_row_from_right(rows, row_index)
+    # print(f"detect_from_right, {row_index=}, {trees=}")
+    return compute_visible_trees(trees)
+
+
 nb_edge_trees = 4 * (a - 1)
 
 # for i in range(a):
@@ -117,27 +118,53 @@ for i in range(a):
     detected_trees.add((a - 1, i))
 print(f"nb of edge trees : {len(detected_trees)}")
 
-for i in range(a):
-    up_visibility, rank = detect_from_up(rows, i)
-    if up_visibility >= 1:
-        col, row = i, rank
-        detected_trees.add((col, row))
 
-    right_visibility, rank = detect_from_right(rows, i)
-    if right_visibility >= 1:
-        col, row = a - 1 - rank, i
-        detected_trees.add((col, row))
+for col_index in range(a):
+    # print(f"from TOP ({col_index=})")
+    ranks = detect_from_top(rows, col_index)
 
-    down_visibility, rank = detect_from_down(rows, i)
-    if down_visibility >= 1:
-        col, row = i, a - 1 - rank
+    for rank in ranks:
+        col, row = col_index, rank
+        # print(f"DETECTED ({col}, {row})")
         detected_trees.add((col, row))
+    # else:
+    #     print("NO DETECTION")
 
-    left_visibility, rank = detect_from_left(rows, i)
-    if left_visibility >= 1:
-        col, row = rank, i
+
+for col_index in range(a):
+    # print(f"\nfrom DOWN ({col_index=})")
+    ranks = detect_from_down(rows, col_index)
+
+    for rank in ranks:
+        col, row = col_index, a - 1 - rank
+        # print(f"DETECTED ({col}, {row})")
         detected_trees.add((col, row))
+    # else:
+    #     print("NO DETECTION")
 
-print(f"{detected_trees=}")
+
+for row_index in range(a):
+    # print(f"\nfrom RIGHT ({row_index=})")
+    ranks = detect_from_right(rows, row_index)
+    for rank in ranks:
+        col, row = a - 1 - rank, row_index
+        # print(f"DETECTED ({col}, {row})")
+        detected_trees.add((col, row))
+    # else:
+    #     print("NO DETECTION")
+
+
+for row_index in range(a):
+    # print(f"\nfrom LEFT ({row_index=})")
+    ranks = detect_from_left(rows, row_index)
+    for rank in ranks:
+        col, row = rank, row_index
+        # print(f"DETECTED ({col}, {row})")
+        detected_trees.add((col, row))
+    # else:
+        # print("NO DETECTION")
+
+
+# print(f"{detected_trees=}")
 
 print(f"{len(detected_trees)=}")
