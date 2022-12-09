@@ -1,71 +1,71 @@
 import sys
+import aoc_square
 
 
-with open(sys.argv[1], "r") as f:
-    lines = f.readlines()
-
-# Append new line at end of input:
-lines[-1] += "\n"
-
-rows = []
-for line in lines:
-    input_line = line[:-1]
-    row = [int(x) for x in input_line]
-    rows.append(row)
-
-a = len(rows)
+def get_distance_view(me, rest_of_trees):
+    view_distance = 0
+    for x in rest_of_trees:
+        view_distance += 1
+        if me <= x:
+            break
+    return view_distance
 
 
-def get_trees_towards_right(rows, col_index, row_index):
-    row = rows[row_index]
-    trees = row[col_index + 1 :]
-    return trees
+
+def compute_element_score(i, j):
+    me = square.get_element(i, j)
+    top = square.get_elements_to_top(i, j)
+    top_dist = get_distance_view(me, top)
+
+    right = square.get_elements_to_right(i, j)
+    right_dist = get_distance_view(me, right)
+
+    bottom = square.get_elements_to_bottom(i, j)
+    bottom_dist = get_distance_view(me, bottom)
+
+    left = square.get_elements_to_left(i, j)
+    left_dist = get_distance_view(me, left)
+
+    return top_dist * right_dist * bottom_dist * left_dist
 
 
-def get_trees_towards_left(rows, col_index, row_index):
-    row = rows[row_index]
-    first_trees = row[:col_index]
-    trees = list(reversed(first_trees))
-    return trees
 
+def test_01(square):
+    for i, j in ((2, 1), (2, 3)):
+        me = square.get_element(i, j)
+        print(f"{(i,j)} --> {me}")
+        top = square.get_elements_to_top(i, j)
+        print(f"{top=}")
+        top_dist = get_distance_view(me, top)
+        print(f"{top_dist=}")
 
-def get_trees_towards_bottom(rows, col_index, row_index):
-    column = [row[col_index] for row in rows]
-    trees = column[row_index + 1 :]
-    return trees
+        right = square.get_elements_to_right(i, j)
+        print(f"{right=}")
+        right_dist = get_distance_view(me, right)
+        print(f"{right_dist=}")
 
+        bottom = square.get_elements_to_bottom(i, j)
+        print(f"{bottom=}")
+        bottom_dist = get_distance_view(me, bottom)
+        print(f"{bottom_dist=}")
 
-def get_trees_towards_up(rows, col_index, row_index):
-    column = [row[col_index] for row in rows]
-    first_trees = column[:row_index]
-    trees = list(reversed(first_trees))
-    return trees
+        left = square.get_elements_to_left(i, j)
+        print(f"{left=}")
+        left_dist = get_distance_view(me, left)
+        print(f"{left_dist=}")
 
-
-def count_visible_trees(u, me):
-    if len(u) >= 1:
-        nb = 1
-        max_seen = me
-        for x in u[1:]:
-            if x > max_seen:
-                nb += 1
-                max_seen = x
-        return nb
-    else:
-        return 0
+        score = top_dist * right_dist * bottom_dist * left_dist
+        print(f"{score=}")
+        print("-" * 40)
 
 
 if __name__ == "__main__":
-    scores = {}
-    for c in range(a):
-        for r in range(a):
-            me = rows[r][c]
-            up = count_visible_trees(get_trees_towards_up(rows, c, r), me)
-            right = count_visible_trees(get_trees_towards_right(rows, c, r), me)
-            bottom = count_visible_trees(get_trees_towards_bottom(rows, c, r), me)
-            left = count_visible_trees(get_trees_towards_left(rows, c, r), me)
-            scores[(c, r)] = up * right * bottom * left
-    print(scores)
-    print(max(scores.values()))
 
-# for i in range(a):
+    square = aoc_square.SquareOfNumbers(sys.argv[1])
+    scores = {}
+    a = square.side()
+    for i in range(a):
+        for j in range(a):
+            scores[(i, j)] = compute_element_score(i, j)
+
+    print(max(scores.values()))
