@@ -17,16 +17,16 @@ class Device:
         self.time = 0
         self.x = 1
         self.signal_strength = 0
-        self.screen = [["?" for _ in range(NB_COLS)] for _ in range(NB_ROWS)]
+        self.screen = [[" " for _ in range(NB_COLS)] for _ in range(NB_ROWS)]
 
     def tick(self):
-        t0 = self.time
+        pixel_row = self.time // NB_COLS
+        pixel_col = self.time % NB_COLS
+        self.screen[pixel_row][pixel_col] = "#" if abs(self.x - pixel_col) <= 1 else "."
+
         self.time += 1
         if self.time in NTH_TIMES_TO_CONSIDER:
             self.signal_strength += self.time * self.x
-        row = t0 // NB_COLS
-        col = t0 % NB_COLS
-        self.screen[row][col] = "#" if abs(self.x - col) <= 1 else "."
 
     def display(self):
         for row in range(NB_ROWS):
