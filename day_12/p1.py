@@ -1,5 +1,21 @@
-import sys
+"""
+Implementation using a double ended queue to store the visitable positions.
 
+
+Each new visitable position is appended at right side of the queue, with a number indicating
+the rank of the visitation (starting at 0)
+When no more new visitable position is added (due to obstacle of too high elevation), then
+positions are pop-left-ed one by one to a set() of visited positions (in order to visit a position
+only once).
+What is visitation of a position ? If the position is the END to reach, then the algorithm returns
+the rank of the visitation. As visited positions are pop-left-ed, the first pop-lefted position to
+be returned is the position that has needed the fewest step, so this rank is the researched minimum.
+
+The algorithm assumes that there is at least one path from START to END.
+"""
+
+import sys
+import collections
 
 with open(sys.argv[1], "r") as f:
     input_ = f.read()
@@ -22,21 +38,26 @@ def find_char(char):
     return r, c
 
 
-S = find_char("S")
-E = find_char("E")
+START_POS = find_char("S")
+END_POS = find_char("E")
 
-print(f"{S=} {E=}")
+print(f"{START_POS=}, {END_POS=}")
 
 # DIRS = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1), ".": (0, 0)}
 DIRS = {"^": (-1, 0), "v": (1, 0), "<": (0, -1), ">": (0, 1)}
 
 
-def altitude(pos):
-    return ord(MAP[pos[0]][pos[1]])
+def get_altitude(pos):
+    if pos == START_POS:
+        return ord("a")
+    elif pos == END_POS:
+        return ord("z")
+    else:
+        return ord(MAP[pos[0]][pos[1]])
 
 
 def move(pos_, mov):
-    return tuple(pos_[i] + mov[i] for i in range(2))
+    return tuple([pos_[i] + mov[i] for i in range(2)])
 
 
 def is_in_map(pos_):
@@ -46,37 +67,34 @@ def is_in_map(pos_):
 # print(f"{is_in_map((0, 0))=}")
 
 
-def can_go(pos_, dir_):
+def can_move_from_pos_in_direction(pos_, dir_):
     """dir_ and pos are (x, y)"""
     new_pos = move(pos_, dir_)
-    can_go = is_in_map(new_pos) and (
-        (altitude(new_pos) - altitude(pos_) <= 1) or (new_pos == E)
-    )
-    return can_go
+    yes_i_can = is_in_map(new_pos) and get_altitude(new_pos) - get_altitude(pos_) <= 1
+    return yes_i_can
 
 
-# for dir_s, dir_ in DIRS.items():
-#     print(f"{dir_s=} ", end="")
-#     print(f"{can_go((0, 0), dir_)=}")
+positions_and_ranks = collections.deque()  # double ended queue of (position, altitude)
+positions_and_ranks.append((START_POS, 0))
 
 
-move_choices = []
-positions = []
-end_reached = False
-pos = S
-positions.append(pos)
+def compute_best_path():
+    visited_positions = set()
+    while positions_and_ranks:
+        # print(f"{positions_and_ranks=}")
+        pos, rank = positions_and_ranks.popleft()
+        if pos in visited_positions:
+            # print(f"{pos=} has been visited")
+            continue
+        # else:
+        #     print(f"new position to visit : {pos=}")
+        visited_positions.add(pos)
+        if pos == END_POS:
+            return rank
+        for direction in DIRS.values():
+            if can_move_from_pos_in_direction(pos, direction):
+                new_pos = move(pos, direction)
+                positions_and_ranks.append((new_pos, rank + 1))
 
-blocked = False
-while not end_reached and not blocked:
-    moving = False
-    for move_choice, dir_ in DIRS.items():
-        if can_go(pos, dir_):
-            pos = move(pos, dir_)
-            positions.append(pos)
-            move_choices.append(move_choice)
-            moving = True
-            break
-        end_reached = pos == E
-        blocked = not moving
-success = end_reached
-print(success, move_choices, positions)
+
+print(compute_best_path())
