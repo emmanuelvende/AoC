@@ -64,8 +64,15 @@ def can_move_from_pos_in_direction(pos_, dir_):
     return yes_i_can
 
 
-positions_and_ranks = collections.deque()  # double ended queue of (position, rank) tuples
-positions_and_ranks.append((START_POS, 0))
+positions_and_ranks = (
+    collections.deque()
+)  # double ended queue of (position, rank) tuples
+
+for r in range(H):
+    for c in range(W):
+        pos = r, c
+        if get_altitude(pos) == ord("a"):
+            positions_and_ranks.append((pos, 0))
 
 
 def compute_best_path():
