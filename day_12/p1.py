@@ -1,17 +1,7 @@
 """
 Implementation using a double ended queue to store the visitable positions.
 
-
-Each new visitable position is appended at right side of the queue, with a number indicating
-the rank of the visitation (starting at 0)
-When no more new visitable position is added (due to obstacle of too high elevation), then
-positions are pop-left-ed one by one to a set() of visited positions (in order to visit a position
-only once).
-What is visitation of a position ? If the position is the END to reach, then the algorithm returns
-the rank of the visitation. As visited positions are pop-left-ed, the first pop-lefted position to
-be returned is the position that has needed the fewest step, so this rank is the researched minimum.
-
-The algorithm assumes that there is at least one path from START to END.
+Classical BSF problem (https://fr.wikipedia.org/wiki/Algorithme_de_parcours_en_largeur)
 """
 
 import sys
