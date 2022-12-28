@@ -1,7 +1,8 @@
 import sys
+import functools
 
-# PRINT = 1
-PRINT = 0
+PRINT = 1
+# PRINT = 0
 
 
 def print_(x, end="\n"):
@@ -44,17 +45,21 @@ with open(sys.argv[1], "r") as f:
     input_ = f.read()
 
 pairs = input_.split("\n\n")
-analysis_results = []  # list of (u, v, value)
 
+packets = []
 for pair in pairs:
     u, v = pair.split("\n")
     u, v = eval(u), eval(v)
-    comp = compare_order(u, v)
-    print_(f"{u=}, {v=}, {comp=}")
-    analysis_results.append((u, v, comp))
+    packets += [u, v]
 
-indices_sum = 0
-for i, r in enumerate(analysis_results):
-    indices_sum += i + 1 if r[2] == -1 else 0
+packets.append([[2]])
+packets.append([[6]])
 
-print(indices_sum)
+print_(packets)
+
+packets.sort(key=functools.cmp_to_key(compare_order))
+
+index_1 = packets.index([[2]]) + 1
+index_2 = packets.index([[6]]) + 1
+
+print(index_1 * index_2)
