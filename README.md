@@ -1,6 +1,6 @@
-# AoC-2022
+# AoC
 
-:santa: My participation to Advent of Code 2022 :christmas_tree:
+:santa: My participation to Advent of Code events :christmas_tree:
 
 
 >_"Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live. Code for readability."_
