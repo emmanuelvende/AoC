@@ -22,12 +22,3 @@ Due to schedulings and other occupations I cannot assume true competition on mai
 
 Hope you'll get some learning reading my solutions :bouquet:
 
-```
-      --------Part 1--------   --------Part 2--------
-Day       Time   Rank  Score       Time   Rank  Score
-  5   03:01:22  23347      0   03:14:15  22878      0
-  4   03:45:57  30373      0   04:04:41  30662      0
-  3   04:05:20  31839      0   04:25:52  29710      0
-  2   03:52:13  39709      0   04:06:55  37037      0
-  1   11:23:15  79153      0   11:29:29  75242      0
-  ```
