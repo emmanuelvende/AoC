@@ -22,7 +22,7 @@ Then, write the code."_
 ― John Johnson
 
 
-My motivation is to achieve puzzles certainly as fast as I can (and I'm not so quick as I would :persevere:), but also with the more maintainable and shareable code I can write for this kind of game. Remember that I don't consider this as professional code so variables names, design choices, etc. remain primarily driven by the need to resolve fast rather than 
+My motivation is to achieve puzzles certainly as fast as I can (and I'm not so quick as I would :persevere:), but also with the more readable and matainable code I can write for this kind of game. Remember that I don't consider this as professional code so variables names, design choices, etc. remain primarily driven by the need to resolve fast...
 
 I keep this solves under my pillow to consult as useful examples code base when I fall on similar problems as coding in my every day job :+1:
 
