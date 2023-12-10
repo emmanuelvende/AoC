@@ -23,8 +23,8 @@ E = (1, 0)
 MOVES = {"|": (N, S), "-": (W, E), "L": (N, E), "J": (N, W), "7": (W, S), "F": (E, S)}
 
 # MOVES["S"] = MOVES["F"]  # test1.txt
-MOVES["S"] = MOVES["F"]  # test2.txt
-# MOVES["S"] = MOVES["|"]  # input.txt
+# MOVES["S"] = MOVES["F"]  # test2.txt
+MOVES["S"] = MOVES["|"]  # input.txt
 
 # print(MOVES)
 for row, line in enumerate(lines):
