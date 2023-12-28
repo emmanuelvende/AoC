@@ -1,30 +1,34 @@
 # Standard algos for graphs
 
-def compute_neighbours(pos):
+def get_neighbours(node):
     return []
 
-
-visited = set()
-
+def process(node):
+    print(node)
 
 # Depth First Search
-def dfs(visited, pos):  # pos := (col, row)
-    if pos not in visited:
-        visited.add(pos)
-        neighbours = compute_neighbours(pos)
-        # print(neighbours)
-        for neighbour in neighbours:
-            dfs(visited, neighbour)
+def dfs(graph, node):
+    def _dfs(graph, visited, node):
+        if node not in visited:
+            visited.add(node)
+            process(node)
+            for n in get_neighbours(graph, node):
+                _dfs(graph, visited, n)
+
+    visited = set()
+    _dfs(graph, visited, node)
 
 
 # Breadth First Search
-def bfs(visited, pos):
+def bfs(graph, node):
+    visited = set()
     queue = []
-    visited.add(pos)
-    queue.append(pos)
+    visited.add(node)
+    queue.append(node)
     while queue:
-        s = queue.pop(0)
-        for n in compute_neighbours(s):
+        x = queue.pop(0)
+        process(x)
+        for n in get_neighbours(graph, x):
             if n not in visited:
                 visited.add(n)
                 queue.append(n)
