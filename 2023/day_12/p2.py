@@ -1,4 +1,5 @@
 import sys
+import functools
 
 with open(sys.argv[1], "r") as f:
     data = f.read()
@@ -7,6 +8,7 @@ lines = data.split("\n")
 
 
 # print(lines)
+@functools.lru_cache
 def count_valid_configs(record, groups):
     # print(f"{record=}, {groups=}")
     if record == "":
@@ -35,6 +37,8 @@ def count_valid_configs(record, groups):
 total = 0
 for line in lines:
     record, groups = line.split()
+    record = "?".join([record] * 5)
+    groups = ",".join([groups] * 5)
     groups = tuple(int(x) for x in groups.split(","))
     # print(record, groups)
     total += count_valid_configs(record, groups)
