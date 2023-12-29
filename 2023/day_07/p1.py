@@ -7,10 +7,6 @@ with open(sys.argv[1], "r") as f:
 C = "23456789TJQKA"
 
 
-def is_5oak(h):
-    return all(x == h[0] for x in h[1:])
-
-
 def eval(h):
     d = {}
     for c in h:
